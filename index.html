@@ -3561,5 +3561,63 @@
       defer
     ></script>
     <!-- End Constant Contact Active Forms -->
+     <script>
+      // Back button fix — wrap showPage to push history entries
+      (function() {
+        const originalShowPage = window.showPage;
+
+        window.showPage = function(page) {
+          history.pushState({ page: page }, '', '#' + page);
+          originalShowPage(page);
+        };
+
+        // Handle browser back/forward button
+        window.addEventListener('popstate', function(e) {
+          const page = (e.state && e.state.page) ? e.state.page : 'home';
+          originalShowPage(page);
+        });
+
+        // Set initial history entry for current page on load
+        history.replaceState({ page: 'home' }, '', '#home');
+      })();
+    </script>
+    <script>
+      (function () {
+        function injectCompanyTypeDropdown() {
+          var input = document.getElementById('custom_field_string_company_type_0');
+          if (!input) return;
+          if (document.getElementById('company_type_select')) return; // already swapped
+
+          var select = document.createElement('select');
+          select.id = 'company_type_select';
+          select.className = input.className;
+
+          ['', 'Plumber', 'Mitigation Company', 'Asbestos Abatement', 'Mold Remediation'].forEach(function (opt) {
+            var el = document.createElement('option');
+            el.value = opt;
+            el.textContent = opt === '' ? 'Select company type...' : opt;
+            select.appendChild(el);
+          });
+
+          input.type = 'hidden';
+          input.value = '';
+
+          select.addEventListener('change', function () {
+            input.value = select.value;
+          });
+
+          input.parentNode.insertBefore(select, input);
+        }
+
+        var observer = new MutationObserver(function () {
+          if (document.getElementById('custom_field_string_company_type_0')) {
+            injectCompanyTypeDropdown();
+            observer.disconnect();
+          }
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+      })();
+    </script>
   </body>
 </html>
