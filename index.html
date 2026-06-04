@@ -1359,7 +1359,7 @@
       .mobile-nav-link.active {
         color: var(--orange);
       }
-      select[id^="company_type_select"] {
+      select[data-ct-field="company_type"] {
         width: 100%;
         height: 46px;
         padding: 10px 15px;
@@ -1380,7 +1380,7 @@
         background-position: right 15px center;
         cursor: pointer;
       }
-      select[id^="company_type_select"]:focus {
+      select[data-ct-field="company_type"]:focus {
         outline: none;
         border-color: rgb(50, 50, 50);
       }
@@ -3611,12 +3611,12 @@
         function injectDropdowns() {
           var inputs = document.querySelectorAll('input[name="custom_field_string_company_type"]');
           inputs.forEach(function (input) {
-            var selectId = 'company_type_select_' + input.id;
-            if (document.getElementById(selectId)) return;
+            if (input.type === 'hidden') return;
 
             var select = document.createElement('select');
-            select.id = selectId;
             select.className = input.className;
+            select.setAttribute('data-ct-select', 'true');
+            select.setAttribute('data-ct-field', 'company_type');
 
             ['', 'Plumber', 'Mitigation Company', 'Asbestos Abatement', 'Mold Remediation'].forEach(function (opt) {
               var el = document.createElement('option');
