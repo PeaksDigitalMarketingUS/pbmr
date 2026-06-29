@@ -1439,8 +1439,15 @@
         <button class="nav-link" onclick="showPage('careers')">Careers</button>
         <button class="nav-link" onclick="showPage('contact')">Contact</button>
       </div>
-      <a href="tel:7207070711" class="nav-phone">720-707-0711</a>
-    </nav>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="mobile-menu-btn" onclick="toggleMobile()" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <a href="tel:7207070711" class="nav-phone">720-707-0711</a>
+        </div>
+      </nav>
 
     <!-- MOBILE NAV -->
     <div class="mobile-nav" id="mobileNav">
